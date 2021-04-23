@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export const api = axios.create({
-        baseURL: 'http://localhost:3333'
+        baseURL: 'http://http://node67880-podcastr.jelastic.saveincloud.net/db/episodes/episodes'
 })
