@@ -6,6 +6,8 @@ import { api } from "../../services/api";
 import styles from "../../styles/episode.module.scss"
 import Image from 'next/image'
 import Link from 'next/link'
+import { useContext } from 'react';
+import { PlayerContext } from '../../context/PlayerContext';
 
 type Episode  = {
     id: string;
@@ -24,6 +26,7 @@ type EpisodeProps ={
 }
 
 export default function Episode ({episode} : EpisodeProps) {
+    const {play} = useContext(PlayerContext);
     return(
         <div className={styles.episode}>
             <div className={styles.episodeContent}>
@@ -38,7 +41,7 @@ export default function Episode ({episode} : EpisodeProps) {
                         alt={episode.title} 
                         objectFit="cover"
                     />
-                    <button type="button"><img src="/play.svg" alt="Tocar episódio"/></button>
+                    <button type="button"><img src="/play.svg" alt="Tocar episódio" onClick = {() => play(episode)}/></button>
                 </div>
                 <header>
                     <h1>{episode.title}</h1>
@@ -55,8 +58,22 @@ export default function Episode ({episode} : EpisodeProps) {
     );
 }
 export const getStaticPaths: GetStaticPaths = async () => {
+    const {data} = await api.get('episodes', {
+        params:{
+          _limit: 2,
+          _sort: 'publisher_at',
+          _order: 'desc'
+        }
+    });
+    const paths = data.map(episode =>{
+        return({
+            params:{
+                slugEpisode: episode.id,
+            }
+        })
+    });
     return({
-        paths: [],
+        paths,
         fallback: "blocking",
     })
 }

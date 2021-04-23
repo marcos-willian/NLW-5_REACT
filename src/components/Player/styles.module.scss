@@ -19,12 +19,33 @@
     }
     footer{
         align-self: stretch;
-        &.empyt{
+        &.empty{
             opacity: 0.5;
         }
     }
 }
-.empytPlayer{
+.currentEpisode{
+    text-align: center;
+
+    img {
+        border-radius: 1.5rem;
+    }
+
+    strong {
+        display: block;
+        margin-top: 1rem;
+        font: 600 1.25rem Lexend, sans-serif;
+        line-height: 1.75rem;
+    }
+
+    span {
+        display: block;
+        margin-top: 1rem;
+        opacity: 0.6;
+        line-height: 1.5rem;
+    }
+}
+.emptyPlayer{
     width:  100%;
     height: 20rem;
     border: 1.5px dashed var(--purple-300);
@@ -48,7 +69,7 @@
     }
     .Slider{
         flex: 1;
-        .empytSlider{
+        .emptySlider{
             width: 100%;
             height: 4px;
             background: var(--purple-300);
@@ -67,11 +88,25 @@
         background: transparent;
         border: 0;
         font-size: 0;
+        transition: filter 0.2s;
+
+        &:hover:not(:disabled){
+            filter: brightness(0.6);
+        }
+
+        &:disabled{
+            cursor: none;
+        }
+
         &.playButton{
             width: 4rem;
             height: 4rem;
             border-radius: 1rem;
             background: var(--purple-300);
+
+            &:hover:not(:disabled){
+                filter: brightness(0.9);
+            }
         }
     }
 }
